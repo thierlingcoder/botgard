@@ -145,16 +145,16 @@ class Individual(IndividualBase, Configurable):
     species_link_decorator.searchable_field = "species__full_name_generated"
 
     @configurable
-    def family_single(self):
-        return self.species.family.family
-    family_single.short_description = _('family')
-    family_single.admin_order_field = "species__family__family"
+    def category_single(self):
+        return self.species.category.category
+    category_single.short_description = _('category')
+    category_single.admin_order_field = "species__category__category"
 
     @configurable
     def genus_single(self):
-        return self.species.family.genus
+        return self.species.category.genus
     genus_single.short_description = _('genus')
-    genus_single.admin_order_field = "species__family__genus"
+    genus_single.admin_order_field = "species__category__genus"
 
     @configurable
     def endangering_decorator(self):
@@ -241,7 +241,7 @@ class Individual(IndividualBase, Configurable):
         spec_name = spec_name.split()
 
         if len(spec_name) == 2:
-            line1 = self.species.family.genus
+            line1 = self.species.category.genus
             line2 = self.species.species
         else:
             for elem in spec_name:
@@ -348,16 +348,16 @@ class Seed(Individual):
         proxy = True
 
     @configurable
-    def family_single(self):
-        return self.species.family.family
-    family_single.short_description = _('family')
-    family_single.admin_order_field = "species__family__family"
+    def category_single(self):
+        return self.species.category.category
+    category_single.short_description = _('category')
+    category_single.admin_order_field = "species__category__category"
 
     @configurable
     def genus_single(self):
-        return self.species.family.genus
+        return self.species.category.genus
     genus_single.short_description = _('genus')
-    genus_single.admin_order_field = "species__family__genus"
+    genus_single.admin_order_field = "species__category__genus"
 
     @configurable
     def seed_etikett_decorator(self):

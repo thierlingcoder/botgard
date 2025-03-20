@@ -887,8 +887,8 @@ msgid "OpenStreetMap result"
 msgstr "OpemStreetMap Ergebnis"
 
 #: geolocation/templates/geolocation/osm_results.html:29
-msgid "category"
-msgstr "Kategorie"
+# msgid "genera"
+# msgstr "Gattungen"
 
 #: geolocation/templates/geolocation/osm_results.html:30
 msgid "rank/importance"
@@ -1000,8 +1000,8 @@ msgstr "Individuum"
 #: individuals/models/individual.py:125 individuals/models/individual.py:328
 #: individuals/models/outplanting.py:66 map/views.py:41 species/models.py:40
 #: species/models.py:194
-msgid "family"
-msgstr "Familie"
+msgid "category"
+msgstr "Kategorie"
 
 #: individuals/models/individual.py:131 individuals/models/individual.py:334
 #: individuals/models/outplanting.py:72 map/views.py:37 species/models.py:33
@@ -1875,10 +1875,6 @@ msgstr "Zusätzliches"
 msgid "genera"
 msgstr "Kategorien"
 
-#: species/models.py:41
-msgid "subfamily"
-msgstr "Unterfamilie"
-
 #: species/models.py:42
 msgid "tribus"
 msgstr "Tribus"
@@ -1895,9 +1891,15 @@ msgstr "Autor"
 msgid "can check nomenclature of a species"
 msgstr "Kann Nomenklatur prüfen"
 
+<<<<<<< Updated upstream
 #: species/models.py:92
 msgid "category"
 msgstr "Kategorie"
+=======
+#: species/models.py:101
+msgid "genus & category"
+msgstr "Gattung & Kategorie"
+>>>>>>> Stashed changes
 
 #: species/models.py:103
 msgid "author species"
@@ -2254,8 +2256,13 @@ msgstr "Ticket anzeigen: "
 #~ msgid "Department code must begin with territory code"
 #~ msgstr "Abteilungs-code muß mit dem Revier-code beginnen"
 
+<<<<<<< Updated upstream
 #~ msgid "category"
 #~ msgstr "Kategorie"
+=======
+#~ msgid "category & genus"
+#~ msgstr "Kategorie & Gattung"
+>>>>>>> Stashed changes
 
 #, fuzzy
 #~| msgid "territory"

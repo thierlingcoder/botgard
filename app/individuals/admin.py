@@ -70,8 +70,15 @@ class SeedAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     list_filter = (# 'seed_available', 'seed_in_stock', 'source__name',
                    ('species__full_name_generated', ForeignKeyFilter),
                    ('species__nomenclature_checked', ForeignKeyFilter),
+<<<<<<< Updated upstream
                    ('species__family__family', ForeignKeyFilter),
                    ('species__family__genus', ForeignKeyFilter),
+=======
+                   ('species__area_of_distribution_etikettxt', ForeignKeyFilter),
+                   ('species__area_of_distribution_background', ForeignKeyFilter),
+                   ('species__category__category', ForeignKeyFilter),
+                   ('species__category__genus', ForeignKeyFilter),
+>>>>>>> Stashed changes
                    )
 
     blacklist = ('id', '__str__', 'ipen_transfer_restricted', 'ipen_garden_code', 'ipen_accession_number',
@@ -79,8 +86,8 @@ class SeedAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
                  'alive_outplantings_generated')
 
     search_fields = search_fields_compatible([
-        'order_number', '@species__species', 'accession_number', '@species__family__genus',
-        '@species__family__family', 'ipen_generated', '@source__name', '@species__deutscher_name'
+        'order_number', '@species__species', 'accession_number', '@species__category__genus',
+        '@species__category__category', 'ipen_generated', '@source__name', '@species__deutscher_name'
     ])
     ordering = ('accession_number',)
     list_editable = ('seed_available', 'seed_in_stock')
@@ -146,8 +153,15 @@ class IndividualAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable)
                    ('species__full_name_generated', ForeignKeyFilter),
                    ('species__nomenclature_checked', ForeignKeyFilter),
                    ('species__protection_of_species', ForeignKeyFilter),
+<<<<<<< Updated upstream
                    ('species__family__family', ForeignKeyFilter),
                    ('species__family__genus', ForeignKeyFilter),
+=======
+                   ('species__area_of_distribution_etikettxt', ForeignKeyFilter),
+                   ('species__area_of_distribution_background', ForeignKeyFilter),
+                   ('species__category__category', ForeignKeyFilter),
+                   ('species__category__genus', ForeignKeyFilter),
+>>>>>>> Stashed changes
                    # ('geo_location__geo_name', ForeignKeyFilter),
                    # ('osm_location__full_name', ForeignKeyFilter),
                    )
@@ -162,8 +176,8 @@ class IndividualAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable)
                      '@species__subspecies',
                      '@species__variety',
                      '@species__form',
-                     '@species__family__genus',
-                     '@species__family__family',
+                     '@species__category__genus',
+                     '@species__category__category',
                      '@species__full_name_generated',
                      '@species__deutscher_name',
                      '@source__name',
@@ -305,7 +319,7 @@ if 0:
         form = AutoCompleteForm(Outplanting)
         list_display = ('territory_decorator', 'department_decorator',
                         'seeded_date', 'date', 'plant_died',
-                        'individual_link_decorator', 'family_single', 'genus_single')
+                        'individual_link_decorator', 'category_single', 'genus_single')
         list_filter = (
             ('department__code', ForeignKeyFilter),
             ('department__territory__code', ForeignKeyFilter),

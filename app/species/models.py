@@ -30,13 +30,27 @@ LIFEFORM_CHOICES = (
 
 class Category(models.Model, Configurable):
     class Meta:
+<<<<<<< Updated upstream
         verbose_name = _('category')
         verbose_name_plural = _('categories')
         ordering = ('category',)
+=======
+        verbose_name = _('genus')
+        verbose_name_plural = _('genera')
+        ordering = ('genus', 'category',)
+        unique_together = ('category', 'tribus', 'subtribus', 'genus', 'genus_author')
+>>>>>>> Stashed changes
 
     _id_field = "full_name_generated"
 
     category = models.CharField(verbose_name=_('category'), max_length=50, blank=False)
+<<<<<<< Updated upstream
+=======
+    tribus = models.CharField(verbose_name=_('tribus'), max_length=50, blank=True)
+    subtribus = models.CharField(verbose_name=_('subtribus'), max_length=50, blank=True)
+    genus = models.CharField(verbose_name=_('genus'), max_length=50, blank=False)
+    genus_author = models.CharField(verbose_name=_('author'), max_length=100, blank=True)
+>>>>>>> Stashed changes
     full_name_generated = models.CharField(verbose_name=_('full name'), max_length=350, blank=True)
 
     # @configurable
@@ -44,18 +58,26 @@ class Category(models.Model, Configurable):
         return self.get_full_name()
 
     def get_full_name(self):
+<<<<<<< Updated upstream
         return self.category
+=======
+        if self.category.upper() == 'ASTERACEAE':
+            return '%s %s - %s %s %s' % (self.genus, self.genus_author, self.category,
+                                             self.tribus, self.subtribus)
+        else:
+            return '%s %s - %s' % (self.genus, self.genus_author, self.category)
+>>>>>>> Stashed changes
 
     @configurable
     def change_link_decorator(self):
-        url = reverse("admin:species_family_change", args=(self.pk,))
+        url = reverse("admin:species_category_change", args=(self.pk,))
         return mark_safe('<a href="%s" class="changelink">%s</a>' % (url, _('show')))
     change_link_decorator.short_description = _('show')
     change_link_decorator.exclude_csv = True
 
     @configurable
     def delete_link_decorator(self):
-        url = reverse("admin:species_family_delete", args=(self.pk,))
+        url = reverse("admin:species_category_delete", args=(self.pk,))
         return mark_safe('<a href="%s" class="deletelink">%s</a>' % (url, _('delete')))
     delete_link_decorator.short_description = _('delete')
     delete_link_decorator.exclude_csv = True
@@ -79,7 +101,11 @@ class Species(models.Model, Configurable):
     class Meta:
         verbose_name = ungettext_lazy('species', 'species', 1)
         verbose_name_plural = ungettext_lazy('species', 'species', 2)
+<<<<<<< Updated upstream
         ordering = ('category', 'species', 'subspecies',)
+=======
+        ordering = ('category__genus', 'species', 'subspecies',)
+>>>>>>> Stashed changes
         unique_together = (
             "category", "species", "species_author", "subspecies", "variety", "form", "cultivar",
             "deutscher_name",
@@ -88,7 +114,11 @@ class Species(models.Model, Configurable):
 
     _id_field = 'full_name_generated'
 
+<<<<<<< Updated upstream
     category = models.ForeignKey(Category, verbose_name=_('category'), on_delete=models.CASCADE)
+=======
+    category = models.ForeignKey(Category, verbose_name=_('genus & category'), on_delete=models.CASCADE)
+>>>>>>> Stashed changes
     species = models.CharField(verbose_name=_('species'), max_length=100, blank=False)
     species_author = models.CharField(verbose_name=_('author species'), max_length=100, blank=True)
     subspecies = models.CharField(verbose_name=_('subspecies'), max_length=100, blank=True)
@@ -128,7 +158,11 @@ class Species(models.Model, Configurable):
         return self.full_name()
 
     def full_name(self, with_author=True):
+<<<<<<< Updated upstream
         return_string = '%s %s' % (self.category, self.species)
+=======
+        return_string = '%s %s' % (self.category.genus, self.species)
+>>>>>>> Stashed changes
         if self.subspecies:
             return_string += " subsp. " + self.subspecies
         if self.variety:
@@ -145,7 +179,11 @@ class Species(models.Model, Configurable):
     full_name.template_doc = _("Full species name (with author)")
 
     def full_name_each_author_list(self):
+<<<<<<< Updated upstream
         ret_list = [{"name": '%s %s' % (self.category, self.species)}]
+=======
+        ret_list = [{"name": '%s %s' % (self.category.genus, self.species)}]
+>>>>>>> Stashed changes
         if self.species_author:
             ret_list.append({"author": self.species_author})
         if self.subspecies:
@@ -168,11 +206,32 @@ class Species(models.Model, Configurable):
         return self.full_name(with_author=False)
     full_name_no_author.template_doc = _("Full species name (without author)")
 
+<<<<<<< Updated upstream
     @configurable
     def category_single(self):
         return self.category
     category_single.short_description = _('category')
     category_single.admin_order_field = "category__category"
+=======
+    def distribution_lines(self):
+        return self.area_of_distribution_etikettxt.split("\n")
+    distribution_lines.template_doc = _(
+        "Area of distribution (each line separate, access with {{obj.species.distribution_lines.0}}"
+        ", {{obj.species.distribution_lines.0}}, aso...)"
+    )
+
+    @configurable
+    def category_single(self):
+        return self.category.category
+    category_single.short_description = _('category')
+    category_single.admin_order_field = "category__category"
+
+    @configurable
+    def genus_single(self):
+        return self.category.genus
+    genus_single.short_description = _('genus')
+    genus_single.admin_order_field = "category__genus"
+>>>>>>> Stashed changes
 
     @configurable
     def change_link_decorator(self):
@@ -200,7 +259,7 @@ class Species(models.Model, Configurable):
         url = reverse("admin:individuals_individual_changelist")
         return mark_safe('<a href="%s?q=%s%%20%s">%s</a>' % (
             url,
-            self.family.genus, self.species, _('search individuals')
+            self.category.genus, self.species, _('search individuals')
         ))
     search_individuals_link_decorator.short_description = _('individuals')
     search_individuals_link_decorator.exclude_csv = True
@@ -210,7 +269,7 @@ class Species(models.Model, Configurable):
         url = reverse("admin:individuals_seed_changelist")
         return mark_safe('<a href="%s?q=%s%%20%s&seed_available__exact=1">%s</a>' % (
             url,
-            self.family.genus, self.species, _('search seeds')
+            self.category.genus, self.species, _('search seeds')
         ))
     search_seeds_link_decorator.short_description = _('seeds')
     search_seeds_link_decorator.exclude_csv = True

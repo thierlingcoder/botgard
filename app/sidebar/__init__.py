@@ -39,29 +39,6 @@ def _sidebar_validator(value):
     if not isinstance(value['elements'], list):
         raise ValidationError(_('A key \'elements\' must be a list.'))
 
-
-
-register_key('sidebar', default={
-                 "enabled": True,
-                 "elements": [
-                     'shortcuts',
-                     'bookmarks',
-                     'notes',
-                 ]
-             },
-             validator=_sidebar_validator,
-             description='''
-Basic configurations of the Sidebar and it's widgets.<br>
-An <b>object</b> is expected. Valid keys are:<br>
-<dl>
-<dt>enabled</dt>
-<dd>Enables oder disables the complete Sidebar. A Boolean value, either <b>true</b> (enabled) or <b>false</b> (disabled).</dd>
-<dt>elements</dt>
-<dd>A list of strings to enable individual sections in the sidebar and their order. Valid values are <b>shortcuts</b>, <b>bookmarks</b> or <b>notes</b></dd> 
-</dl>
-''')
-
-
 def _shortcuts_validator(value):
     from django.forms import ValidationError
 
@@ -100,10 +77,10 @@ register_key('sidebar_shortcuts', default=
     },
     {
         'icon': 'fa fa-sitemap',
-        'target': 'admin:species_family_changelist',
+        'target': 'admin:species_category_changelist',
         'caption': {
-            'en': 'Genera',
-            'de': 'Gattungen',
+            'en': 'Categories',
+            'de': 'Kategorien',
         },
         'groups': [],
         'only_superuser': False,
@@ -199,3 +176,29 @@ The value for the key '<b>%s</b>' is used as a fallback if no entry for the curr
 <dd>A Boolean. If <b>True</b> only superusers will see the item in the shortcuts section of the sidebar.</dd> 
 </dl>
 '''%settings.LANGUAGE_CODE, validator=_shortcuts_validator)
+
+print('Sidebar_shortcuts geschrieben.')
+
+register_key('sidebar', default={
+                 "enabled": True,
+                 "elements": [
+                     'shortcuts',
+                     'bookmarks',
+                     'notes',
+                 ]
+             },
+             validator=_sidebar_validator,
+             description='''
+Basic configurations of the Sidebar and it's widgets.<br>
+An <b>object</b> is expected. Valid keys are:<br>
+<dl>
+<dt>enabled</dt>
+<dd>Enables oder disables the complete Sidebar. A Boolean value, either <b>true</b> (enabled) or <b>false</b> (disabled).</dd>
+<dt>elements</dt>
+<dd>A list of strings to enable individual sections in the sidebar and their order. Valid values are <b>shortcuts</b>, <b>bookmarks</b> or <b>notes</b></dd> 
+</dl>
+''')
+
+
+
+

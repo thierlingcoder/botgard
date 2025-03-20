@@ -57,13 +57,13 @@ class CalcOutplantingsMixin(models.Model):
         self.num_individuals = locations.values_list("individual").distinct().count()
         self.num_species = locations.values_list("individual__species").distinct().count()
         if hasattr(self, "num_genera"):
-            self.num_genera = locations.values_list("individual__species__family__genus").distinct().count()
+            self.num_genera = locations.values_list("individual__species__category__genus").distinct().count()
 
         self.num_outplantings_alive = locations_alive.count()
         self.num_individuals_alive = locations_alive.values_list("individual").distinct().count()
         self.num_species_alive = locations_alive.values_list("individual__species").distinct().count()
         if hasattr(self, "num_genera"):
-            self.num_genera_alive = locations_alive.values_list("individual__species__family__genus").distinct().count()
+            self.num_genera_alive = locations_alive.values_list("individual__species__category__genus").distinct().count()
         if do_save:
             self.save()
     
