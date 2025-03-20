@@ -11,15 +11,6 @@ from .models import *
 
 class CategoryAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     form = CategoryForm
-<<<<<<< Updated upstream
-    list_display = ('change_link_decorator', 'category', 'delete_link_decorator')
-    search_fields = search_fields_compatible(
-        ('category')
-    )
-    fieldsets = (
-        (None, {
-            'fields': ('category',),
-=======
     list_display = ('change_link_decorator', 'category', 'genus', 'genus_author', 'tribus', 'subtribus',
                     'delete_link_decorator')
     search_fields = search_fields_compatible(
@@ -28,7 +19,6 @@ class CategoryAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     fieldsets = (
         (None, {
             'fields': ('category', ('tribus', 'subtribus'), ('genus', 'genus_author')),
->>>>>>> Stashed changes
         }),
     )
 
@@ -72,11 +62,7 @@ class SpeciesAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     form = SpeciesForm
     list_display = (
         'change_link_decorator', #'full_name_generated', '__str__',
-<<<<<<< Updated upstream
-        'category_single',
-=======
         'genus_single', 'category_single',
->>>>>>> Stashed changes
         'species',
         'deutscher_name', 'synonyme',
         'search_individuals_link_decorator', 'search_seeds_link_decorator', 'availability_decorator',
@@ -88,19 +74,12 @@ class SpeciesAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
         #'nomenclature_checked', 'poisonous_plant',
         ('category__full_name_generated', ForeignKeyFilter),
         ('category__category', ForeignKeyFilter),
-<<<<<<< Updated upstream
-        AliveIndividualsListFilter,
-    )
-    search_fields = search_fields_compatible(
-        ['@category__category', '@species', '@variety', 'synonyme', 'deutscher_name', 'cultivar', ]
-=======
         ('category__genus', ForeignKeyFilter),
         AliveIndividualsListFilter,
     )
     search_fields = search_fields_compatible(
         ['@category__category', '@category__genus', '@species', '@variety', 'synonyme',
          '@category__tribus', '@category__subtribus', 'deutscher_name', 'cultivar', ]
->>>>>>> Stashed changes
     )
     save_on_top = True
 

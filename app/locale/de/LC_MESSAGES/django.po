@@ -1891,15 +1891,9 @@ msgstr "Autor"
 msgid "can check nomenclature of a species"
 msgstr "Kann Nomenklatur prüfen"
 
-<<<<<<< Updated upstream
-#: species/models.py:92
-msgid "category"
-msgstr "Kategorie"
-=======
 #: species/models.py:101
 msgid "genus & category"
 msgstr "Gattung & Kategorie"
->>>>>>> Stashed changes
 
 #: species/models.py:103
 msgid "author species"
@@ -2256,13 +2250,8 @@ msgstr "Ticket anzeigen: "
 #~ msgid "Department code must begin with territory code"
 #~ msgstr "Abteilungs-code muß mit dem Revier-code beginnen"
 
-<<<<<<< Updated upstream
-#~ msgid "category"
-#~ msgstr "Kategorie"
-=======
 #~ msgid "category & genus"
 #~ msgstr "Kategorie & Gattung"
->>>>>>> Stashed changes
 
 #, fuzzy
 #~| msgid "territory"

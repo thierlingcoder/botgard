@@ -70,15 +70,10 @@ class SeedAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     list_filter = (# 'seed_available', 'seed_in_stock', 'source__name',
                    ('species__full_name_generated', ForeignKeyFilter),
                    ('species__nomenclature_checked', ForeignKeyFilter),
-<<<<<<< Updated upstream
-                   ('species__family__family', ForeignKeyFilter),
-                   ('species__family__genus', ForeignKeyFilter),
-=======
                    ('species__area_of_distribution_etikettxt', ForeignKeyFilter),
                    ('species__area_of_distribution_background', ForeignKeyFilter),
                    ('species__category__category', ForeignKeyFilter),
                    ('species__category__genus', ForeignKeyFilter),
->>>>>>> Stashed changes
                    )
 
     blacklist = ('id', '__str__', 'ipen_transfer_restricted', 'ipen_garden_code', 'ipen_accession_number',
@@ -153,15 +148,10 @@ class IndividualAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable)
                    ('species__full_name_generated', ForeignKeyFilter),
                    ('species__nomenclature_checked', ForeignKeyFilter),
                    ('species__protection_of_species', ForeignKeyFilter),
-<<<<<<< Updated upstream
-                   ('species__family__family', ForeignKeyFilter),
-                   ('species__family__genus', ForeignKeyFilter),
-=======
                    ('species__area_of_distribution_etikettxt', ForeignKeyFilter),
                    ('species__area_of_distribution_background', ForeignKeyFilter),
                    ('species__category__category', ForeignKeyFilter),
                    ('species__category__genus', ForeignKeyFilter),
->>>>>>> Stashed changes
                    # ('geo_location__geo_name', ForeignKeyFilter),
                    # ('osm_location__full_name', ForeignKeyFilter),
                    )
