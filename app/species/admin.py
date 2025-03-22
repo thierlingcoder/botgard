@@ -11,14 +11,13 @@ from .models import *
 
 class CategoryAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     form = CategoryForm
-    list_display = ('change_link_decorator', 'category', 'genus', 'genus_author', 'tribus', 'subtribus',
-                    'delete_link_decorator')
+    list_display = ('change_link_decorator', 'category', 'delete_link_decorator')
     search_fields = search_fields_compatible(
-        ('category', 'genus', 'genus_author', 'tribus', 'subtribus')
+        ('category',)
     )
     fieldsets = (
         (None, {
-            'fields': ('category', ('tribus', 'subtribus'), ('genus', 'genus_author')),
+            'fields': ('category',),
         }),
     )
 
@@ -62,9 +61,11 @@ class SpeciesAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     form = SpeciesForm
     list_display = (
         'change_link_decorator', #'full_name_generated', '__str__',
-        'genus_single', 'category_single',
-        'species',
-        'deutscher_name', 'synonyme',
+        'category_single',
+        'collective_species',
+        'plant',
+        'cultivar',
+        'synonyme',
         'search_individuals_link_decorator', 'search_seeds_link_decorator', 'availability_decorator',
         'alive_individuals_decorator',
         'delete_link_decorator',
@@ -74,12 +75,11 @@ class SpeciesAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
         #'nomenclature_checked', 'poisonous_plant',
         ('category__full_name_generated', ForeignKeyFilter),
         ('category__category', ForeignKeyFilter),
-        ('category__genus', ForeignKeyFilter),
         AliveIndividualsListFilter,
     )
     search_fields = search_fields_compatible(
-        ['@category__category', '@category__genus', '@species', '@variety', 'synonyme',
-         '@category__tribus', '@category__subtribus', 'deutscher_name', 'cultivar', ]
+        ['@category__category', '@plant', 'collective_species', 'synonyme',
+         'cultivar', ]
     )
     save_on_top = True
 
@@ -87,20 +87,14 @@ class SpeciesAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
         (None, {
             'fields': (
             'category',
-            ('species', 'species_author'),
-            ('subspecies', 'subspecies_author'),
-            ('variety', 'variety_author'),
-            ('form', 'form_author'),
-            'cultivar', 'deutscher_name', 'synonyme')
+            ('collective_species',),
+            ('plant',),
+            'cultivar', 'synonyme')
         }),
-        #           ('Asteraceae', {
-        #           	'classes' : 'collapse',
-        #           	'fields' : (, 'tribus', 'subtribus'),
-        #          }),
         (_('additional'), {
             'classes': 'collapse',
             'fields': (
-            'protection_of_species', 'poisonous_plant', 'lifeform', 'nomenclature_checked', 'picture', 'comment')
+            'picture', 'comment')
         }),
     )
 

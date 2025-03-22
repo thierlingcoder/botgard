@@ -54,7 +54,7 @@ def texify(value):
 
 @register.filter
 def tex_full_name(species):
-    word_list = species.full_name_each_author_list()
+    word_list = species.full_name()
     ret_list = []
     for word in word_list:
         if word.get("author"):
