@@ -66,9 +66,9 @@ class Category(models.Model, Configurable):
         if hasattr(self, "full_name_generated"):
             self.full_name_generated = self.get_full_name()
         super(Category, self).save(*args, **kwargs)
-        # update coresponding Species.full_name_generated
-        if hasattr(Species, "full_name_generated"):
-            for i in Species.objects.filter(category=self):
+        # update coresponding Plant.full_name_generated
+        if hasattr(Plant, "full_name_generated"):
+            for i in Plant.objects.filter(category=self):
                 i.save()
 
 
@@ -76,7 +76,7 @@ class CategoryForm(AutoCompleteForm(Category)):
     pass
 
 
-class Species(models.Model, Configurable):
+class Plant(models.Model, Configurable):
 
     class Meta:
         verbose_name = ungettext_lazy('plant', 'plants', 1)
@@ -115,8 +115,8 @@ class Species(models.Model, Configurable):
     def distribution_lines(self):
         return self.area_of_distribution_etikettxt.split("\n")
     distribution_lines.template_doc = _(
-        "Area of distribution (each line separate, access with {{obj.species.distribution_lines.0}}"
-        ", {{obj.species.distribution_lines.0}}, aso...)"
+        "Area of distribution (each line separate, access with {{obj.plant.distribution_lines.0}}"
+        ", {{obj.plant.distribution_lines.0}}, aso...)"
     )
 
     @configurable
@@ -181,7 +181,7 @@ class Species(models.Model, Configurable):
     def save(self, *args, **kawrgs):
         if hasattr(self, "full_name_generated"):
             self.full_name_generated = self.full_name()
-        super(Species, self).save(*args, **kawrgs)
+        super(Plant, self).save(*args, **kawrgs)
 
         from individuals.models import Individual
         if hasattr(Individual, "id_name_generated"):
@@ -189,8 +189,8 @@ class Species(models.Model, Configurable):
                 i.save()
 
 
-class SpeciesForm(AutoCompleteForm(Species)):
+class PlantForm(AutoCompleteForm(Plant)):
     def __init__(self, *args, **kwargs):
-        super(SpeciesForm, self).__init__(*args, **kwargs)
+        super(PlantForm, self).__init__(*args, **kwargs)
         if not global_request.get_current_user().has_perm("plant.can_check_nomenclature"):
             self.fields["nomenclature_checked"] = forms.NullBooleanField(disabled=True)

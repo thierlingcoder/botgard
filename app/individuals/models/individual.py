@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy as __
 
-from species.models import Species
+from plant.models import Plant
 from .individual_base import *
 
 
@@ -16,7 +16,7 @@ class Individual(IndividualBase, Configurable):
 
     ipen_garden_code = models.ForeignKey('botman.BotanicGarden', verbose_name="-", on_delete=models.CASCADE)
     plant = models.ForeignKey(
-        'species.Species', verbose_name=_("genus & Species"), blank=False,
+        'plant.Plant', verbose_name=_("genus & Species"), blank=False,
         on_delete=models.CASCADE
     )
     source = models.ForeignKey(
@@ -331,7 +331,7 @@ class IndividualForm(
             "accession_number": widgets.NumberInput()  # don't need a spinbox for the accession number
         },
         autocomplete_mapping={
-            "came_as_species": {"model": Species, "field": "full_name_generated"},
+            "came_as_species": {"model": Plant, "field": "full_name_generated"},
         }
     )
 ):

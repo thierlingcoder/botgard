@@ -107,7 +107,7 @@ class SeedAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
             'fields': ('order_number',)
         })
     )
-    #   	raw_id_fields = ("species", "came_as_species", )
+    #   	raw_id_fields = ("plant", "came_as_species", )
     raw_id_fields = ("plant",)
     inlines = [OutplantingInline]
 

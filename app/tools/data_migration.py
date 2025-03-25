@@ -29,7 +29,7 @@ fields on changes to their source
         Individual.location_generated -> [Outplanting,].department
         Individual.name_generated -> Species.family.genus
 
-    species:
+    plant:
         Family.full_name_generated -> self
         Species.full_name_generated -> Family.genus
 

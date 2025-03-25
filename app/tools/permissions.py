@@ -30,7 +30,7 @@ def get_nomenclature_user():
     Fallback is admin/superuser
     :return: django.contrib.auth.models.User, or None in worst case
     """
-    PERM = "species.can_check_nomenclature"
+    PERM = "plant.can_check_nomenclature"
     candis = set()
     # check for non-admin user with permission from groups
     # ! workaround: User.get_group_permissions() returns also admin permissions :(

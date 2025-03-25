@@ -149,7 +149,7 @@ class TestAllViews(TestCase):
             "individuals:checklist_department": (
                 [Department.objects.all()],
             ),
-            "species:is_available": (
+            "plant:is_available": (
                 [Species.objects.all()],
             ),
             #"seedcatalog:edit_seeds": ['forId'],

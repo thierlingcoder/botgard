@@ -77,7 +77,7 @@ register_key('sidebar_shortcuts', default=
     },
     {
         'icon': 'fa fa-sitemap',
-        'target': 'admin:species_category_changelist',
+        'target': 'admin:plant_category_changelist',
         'caption': {
             'en': 'Categories',
             'de': 'Kategorien',
@@ -87,10 +87,10 @@ register_key('sidebar_shortcuts', default=
     },
     {
         'icon': 'fa fa-code-branch',
-        'target': 'admin:species_species_changelist',
+        'target': 'admin:plant_plant_changelist',
         'caption': {
-            'en': 'Species',
-            'de': 'Arten',
+            'en': 'Plants',
+            'de': 'Pflanzen',
         },
         'groups': [],
         'only_superuser': False,

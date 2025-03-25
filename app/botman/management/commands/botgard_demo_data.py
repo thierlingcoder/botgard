@@ -9,7 +9,7 @@ from django.conf import settings
 from django.db import models
 
 from botman.models import BotanicGarden
-from species.models import Family, Species
+from plant.models import Category, Plant
 from individuals.models import Individual
 
 
@@ -26,21 +26,21 @@ def add_demo_data():
 
     garden_list = _read_csv(demo_path / "garden.csv")
     family_list = _read_csv(demo_path / "family.csv")
-    species_list = _read_csv(demo_path / "species.csv")
+    species_list = _read_csv(demo_path / "plant.csv")
     individual_list = _read_csv(demo_path / "individual.csv")
 
     garden_id_map = _add_to_database(BotanicGarden, garden_list)
-    family_id_map = _add_to_database(Family, family_list)
+    family_id_map = _add_to_database(Category, family_list)
 
     for data in species_list:
         data["family"] = family_id_map[int(data["family"])]
 
-    species_id_map = _add_to_database(Species, species_list)
+    species_id_map = _add_to_database(Plant, species_list)
 
     for data in individual_list:
         data["source"] = garden_id_map[int(data["source"])]
         data["ipen_garden_code"] = garden_id_map[int(data["ipen_garden_code"])]
-        data["species"] = species_id_map[int(data["species"])]
+        data["plant"] = species_id_map[int(data["plant"])]
 
     _add_to_database(Individual, individual_list)
 

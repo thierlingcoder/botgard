@@ -57,8 +57,8 @@ class AliveIndividualsListFilter(admin.SimpleListFilter):
             return queryset
 
 
-class SpeciesAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
-    form = SpeciesForm
+class PlantAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
+    form = PlantForm
     list_display = (
         'change_link_decorator', #'full_name_generated', '__str__',
         'category_single',
@@ -104,5 +104,5 @@ class SpeciesAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
         )
 
 
-admin.site.register(Species, SpeciesAdmin)
+admin.site.register(Plant, PlantAdmin)
 admin.site.register(Category, CategoryAdmin)

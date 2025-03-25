@@ -27,9 +27,9 @@ FAMILIES = [
 ]
 
 SPECIES = [
-    {"species": "Species 1", "family": "Family 1/Genus 1"},
-    {"species": "Species 2", "family": "Family 2/Genus 1"},
-    {"species": "Species 3", "family": "Family 2/Genus 2"},
+    {"plant": "Species 1", "family": "Family 1/Genus 1"},
+    {"plant": "Species 2", "family": "Family 2/Genus 1"},
+    {"plant": "Species 3", "family": "Family 2/Genus 2"},
 ]
 
 TERRITORIES = [
@@ -46,9 +46,9 @@ DEPARTMENTS = [
 ]
 
 INDIVIDUALS = [
-    {"accession_number": 1000, "species": "Species 1", "source": "Garden 1", "found_country": "AU"},
-    {"accession_number": 1001, "species": "Species 2", "source": "Garden 2", "found_country": "IT"},
-    {"accession_number": 1002, "species": "Species 3", "source": "Garden 1", "found_country": "CZ"},
+    {"accession_number": 1000, "plant": "Species 1", "source": "Garden 1", "found_country": "AU"},
+    {"accession_number": 1001, "plant": "Species 2", "source": "Garden 2", "found_country": "IT"},
+    {"accession_number": 1002, "plant": "Species 3", "source": "Garden 1", "found_country": "CZ"},
 ]
 
 OUTPLANTINGS = [
@@ -131,7 +131,7 @@ def create_test_fixtures():
         family, genus = data["family"].split("/")
         Species.objects.create(
             family=Family.objects.get(family=family, genus=genus),
-            species=data["species"],
+            species=data["plant"],
             species_author=rnd.choice(RANDOM_AUTHORS),
             subspecies=data.get("subspecies") or "",
             subspecies_author=rnd.choice(RANDOM_AUTHORS),
@@ -170,7 +170,7 @@ def create_test_fixtures():
         Individual.objects.create(
             accession_number=data["accession_number"],
             accession_extension="",
-            species=Species.objects.get(species=data["species"]),    
+            species=Species.objects.get(species=data["plant"]),
             species_checked_by="",
             came_as_species="",
             ipen_country=data["found_country"],

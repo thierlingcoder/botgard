@@ -41,7 +41,7 @@ class EntryAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     search_fields = search_fields_compatible((
         'accession_number',
         'ipen_generated',
-        '@species',
+        '@plant',
         'source',
         'came_in_as',
         'sowing_number',
@@ -58,7 +58,7 @@ class EntryAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
         (None, {
             'fields': (
                 ('accession_number', 'accession_extension', 'seed_available', 'seed_in_stock',),
-                ('species', 'species_checked_by', 'came_as_species'),
+                ('plant', 'species_checked_by', 'came_as_species'),
                 ('user',),
             )
         }),

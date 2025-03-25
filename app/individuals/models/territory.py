@@ -25,12 +25,12 @@ class CalcOutplantingsMixin(models.Model):
 
     num_outplantings = models.IntegerField(verbose_name=_("# outplantings"), default=0, editable=False)
     num_individuals = models.IntegerField(verbose_name=_("# individuals"), default=0, editable=False)
-    num_species = models.IntegerField(verbose_name=_("# species"), default=0, editable=False)
+    num_species = models.IntegerField(verbose_name=_("# plant"), default=0, editable=False)
     num_genera = models.IntegerField(verbose_name=_("# genera"), default=0, editable=False)
 
     num_outplantings_alive = models.IntegerField(verbose_name=_("# outplantings alive"), default=0, editable=False)
     num_individuals_alive = models.IntegerField(verbose_name=_("# individuals alive"), default=0, editable=False)
-    num_species_alive = models.IntegerField(verbose_name=_("# species alive"), default=0, editable=False)
+    num_species_alive = models.IntegerField(verbose_name=_("# plant alive"), default=0, editable=False)
     num_genera_alive = models.IntegerField(verbose_name=_("# genera alive"), default=0, editable=False)
 
     def _get_outplanting_filter(self):
