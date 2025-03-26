@@ -69,9 +69,6 @@ class SeedAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
         'seed_etikett_decorator', 'endangering_decorator')
     list_filter = (# 'seed_available', 'seed_in_stock', 'source__name',
                    ('plant__full_name_generated', ForeignKeyFilter),
-                   ('plant__nomenclature_checked', ForeignKeyFilter),
-                   ('plant__area_of_distribution_etikettxt', ForeignKeyFilter),
-                   ('plant__area_of_distribution_background', ForeignKeyFilter),
                    ('plant__category__category', ForeignKeyFilter),
                    )
 
@@ -141,14 +138,9 @@ class IndividualAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable)
         'departments_decorator', 'is_alive', 'source', 'etikett_link_decorator',
     )
     list_filter = (#'seed_available', 'seed_in_stock',
-                   #'plant__nomenclature_checked',
                    # add all foreignkey fields that should be filterable
                    ('source__full_name_generated', ForeignKeyFilter),
                    ('plant__full_name_generated', ForeignKeyFilter),
-                   ('plant__nomenclature_checked', ForeignKeyFilter),
-                   ('plant__protection_of_species', ForeignKeyFilter),
-                   ('plant__area_of_distribution_etikettxt', ForeignKeyFilter),
-                   ('plant__area_of_distribution_background', ForeignKeyFilter),
                    ('plant__category__category', ForeignKeyFilter),
                    # ('geo_location__geo_name', ForeignKeyFilter),
                    # ('osm_location__full_name', ForeignKeyFilter),

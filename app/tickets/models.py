@@ -191,11 +191,11 @@ class Etikett_Individual(models.Model, Configurable):
         return """<span class="label-done-indicator" data-label-url="%s"></span>""" % self.get_set_done_url()
 
     # override save, if the nomenclature of the selected individual is not checked the ticket goes to state N
-    def save(self, *args, **kwargs):
-        if not self.individual.species.nomenclature_checked:
-            self.LaserGravur.current_state = 'N'
-            self.LaserGravur.save()
-        super(Etikett_Individual, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.individual.species.nomenclature_checked:
+    #         self.LaserGravur.current_state = 'N'
+    #         self.LaserGravur.save()
+    #     super(Etikett_Individual, self).save(*args, **kwargs)
 
 
 class LaserGravurTicket(BasicTicket):
