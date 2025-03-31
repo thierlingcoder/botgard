@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'config_tables.apps.ConfigTablesConfig',
     'plant.apps.PlantConfig',
     'individuals.apps.IndividualsConfig',
+    'seeds.apps.SeedsConfig',
     'entrybook.apps.EntryBookConfig',
     'plantimages.apps.PlantimagesConfig',
     'seedcatalog.apps.SeedcatalogConfig',

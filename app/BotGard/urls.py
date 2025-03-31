@@ -11,9 +11,10 @@ urlpatterns = i18n_patterns(
     url(r'^admin/', admin.site.urls),
 
     url(r'^individual/',    include('individuals.urls')),
+    url(r'^seeds/',         include('seeds.urls')),
     url(r'^botman/',        include('botman.urls')),
     url(r'^$',              index_page, name="index"),
-    url(r'^plant/',       include('plant.urls')),
+    url(r'^plant/',         include('plant.urls')),
     url(r'^seedcatalog/',   include('seedcatalog.urls')),
     url(r'^tickets/',       include('tickets.urls')),
     url(r'^labels/',        include('labels.urls')),

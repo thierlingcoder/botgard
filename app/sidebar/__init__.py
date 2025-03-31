@@ -107,7 +107,7 @@ register_key('sidebar_shortcuts', default=
     },
     {
         'icon': 'fa fa-certificate',
-        'target': 'admin:individuals_seed_changelist',
+        'target': 'admin:seeds_seeds_changelist',
         'caption': {
             'en': 'Seeds',
             'de': 'Samen',

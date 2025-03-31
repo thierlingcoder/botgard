@@ -60,15 +60,9 @@ class Outplanting(models.Model, Configurable):
 
     @configurable
     def category_single(self):
-        return self.individual.species.category.category
+        return self.individual.plant.category.category
     category_single.short_description = _('category')
-    category_single.admin_order_field = "individual__species__category__category"
-
-    @configurable
-    def genus_single(self):
-        return self.individual.species.category.genus
-    genus_single.short_description = _('genus')
-    genus_single.admin_order_field = "individual__species__category__genus"
+    category_single.admin_order_field = "individual__plant__category__category"
 
 
 def _recalc_outplanting_fields(outplanting, exclude_outplanting=None):

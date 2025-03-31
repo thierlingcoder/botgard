@@ -66,7 +66,7 @@ class SeedAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     list_display = (
         'change_link_decorator', 'order_number', 'accession_number', 'accession_extension', 'ipen_generated',
         'plant_link_decorator', 'seed_available', 'seed_in_stock', 'seed_add_to_latest_catalog_decorator',
-        'seed_etikett_decorator', 'endangering_decorator')
+        'seed_etikett_decorator')
     list_filter = (# 'seed_available', 'seed_in_stock', 'source__name',
                    ('plant__full_name_generated', ForeignKeyFilter),
                    ('plant__category__category', ForeignKeyFilter),
@@ -194,7 +194,6 @@ class IndividualAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable)
 
 
 admin.site.register(Individual, IndividualAdmin)
-admin.site.register(Seed, SeedAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Territory, TerritoryAdmin)
 

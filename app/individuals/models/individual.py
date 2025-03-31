@@ -16,7 +16,7 @@ class Individual(IndividualBase, Configurable):
 
     ipen_garden_code = models.ForeignKey('botman.BotanicGarden', verbose_name="-", on_delete=models.CASCADE)
     plant = models.ForeignKey(
-        'plant.Plant', verbose_name=_("genus & Species"), blank=False,
+        'plant.Plant', verbose_name=_("Plant"), blank=False,
         on_delete=models.CASCADE
     )
     source = models.ForeignKey(
@@ -149,20 +149,6 @@ class Individual(IndividualBase, Configurable):
         return self.plant.category.category
     category_single.short_description = _('category')
     category_single.admin_order_field = "plant__category__category"
-
-    @configurable
-    def genus_single(self):
-        return self.plant.category.genus
-    genus_single.short_description = _('genus')
-    genus_single.admin_order_field = "plant__category__genus"
-
-    @configurable
-    def endangering_decorator(self):
-        return "%s" % self.plant.protection_of_species
-
-    endangering_decorator.short_description = _("endangering")
-    endangering_decorator.admin_order_field = "plant__protection_of_species"
-    endangering_decorator.searchable_field = "plant__protection_of_species"
 
     @configurable
     def departments_decorator(self):

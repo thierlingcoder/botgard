@@ -26,7 +26,7 @@ class CalcOutplantingsMixin(models.Model):
     num_outplantings = models.IntegerField(verbose_name=_("# outplantings"), default=0, editable=False)
     num_individuals = models.IntegerField(verbose_name=_("# individuals"), default=0, editable=False)
     num_species = models.IntegerField(verbose_name=_("# plant"), default=0, editable=False)
-    num_genera = models.IntegerField(verbose_name=_("# genera"), default=0, editable=False)
+    num_genera = models.IntegerField(verbose_name=_("# categories"), default=0, editable=False)
 
     num_outplantings_alive = models.IntegerField(verbose_name=_("# outplantings alive"), default=0, editable=False)
     num_individuals_alive = models.IntegerField(verbose_name=_("# individuals alive"), default=0, editable=False)
@@ -55,15 +55,15 @@ class CalcOutplantingsMixin(models.Model):
 
         self.num_outplantings = locations.count()
         self.num_individuals = locations.values_list("individual").distinct().count()
-        self.num_species = locations.values_list("individual__species").distinct().count()
+        self.num_species = locations.values_list("individual__plant").distinct().count()
         if hasattr(self, "num_genera"):
-            self.num_genera = locations.values_list("individual__species__category__genus").distinct().count()
+            self.num_genera = locations.values_list("individual__plant__category__category").distinct().count()
 
         self.num_outplantings_alive = locations_alive.count()
         self.num_individuals_alive = locations_alive.values_list("individual").distinct().count()
-        self.num_species_alive = locations_alive.values_list("individual__species").distinct().count()
+        self.num_species_alive = locations_alive.values_list("individual__plant").distinct().count()
         if hasattr(self, "num_genera"):
-            self.num_genera_alive = locations_alive.values_list("individual__species__category__genus").distinct().count()
+            self.num_genera_alive = locations_alive.values_list("individual__plant__category__category").distinct().count()
         if do_save:
             self.save()
     
