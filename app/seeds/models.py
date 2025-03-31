@@ -17,11 +17,11 @@ class Seeds(models.Model, Configurable):
     _id_field = "id_name_generated"
 
     plant = models.ForeignKey('plant.Plant', verbose_name=_("Plant"), blank=False, on_delete=models.CASCADE)
-    category = models.ForeignKey('plant.Category', verbose_name=_("Category"), blank=False, on_delete=models.CASCADE)
     id_container = models.CharField(max_length=100, verbose_name=_("container"), blank=False)
     source = models.CharField(max_length=100, verbose_name=_("source"), blank=True)
     collection_year = models.IntegerField(verbose_name=_("collection_year"), blank=True)
     creation_date = models.DateField(verbose_name=_("creation_date"), blank=True, null=True)
+
 
     # source = models.ForeignKey('botman.BotanicGarden', related_name="source_key", verbose_name=_("source"), blank=True,
     #                            null=True, on_delete=models.CASCADE)
@@ -232,14 +232,10 @@ class Seeds(models.Model, Configurable):
 
     def save(self, *args, **kwargs):
         # -- update generated fields --
-        self.ipen_generated = (
-            str.upper(self.ipen_country) + "-" + str.upper(self.ipen_transfer_restricted)
-            + "-" + str.upper(self.ipen_garden_code.code) + "-" + str(self.ipen_accession_number)
-        )
 
         # -- update id_name_generated --
         self.id_name_generated = (
-            "%s (%s)" % (self.accession_number, self.plant.full_name(with_author=False))
+            "%s (%s)" % (self.id_container, self.plant.full_name(with_author=False))
         )[:100]
 
         # -- save Individual --

@@ -158,7 +158,7 @@ class Plant(models.Model, Configurable):
 
     @configurable
     def search_seeds_link_decorator(self):
-        url = reverse("admin:seeds_seed_changelist")
+        url = reverse("admin:seeds_seeds_changelist")
         return mark_safe('<a href="%s?q=%s%%20%s&seed_available__exact=1">%s</a>' % (
             url,
             self.category.category, self.plant, _('search seeds')

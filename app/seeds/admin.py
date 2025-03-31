@@ -23,10 +23,9 @@ class SeedsAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     save_on_top = True
     actions_on_top = True
     list_display = (
-        'change_link_decorator', 'category', 'plant', 'id_container', 'source', 'collection_year')
+        'change_link_decorator', 'plant', 'id_container', 'source', 'collection_year')
     list_filter = (
                    ('plant__full_name_generated', ForeignKeyFilter),
-                   ('plant__category__category', ForeignKeyFilter),
                    )
 
     blacklist = ('id', '__str__', 'creation_date')
@@ -37,8 +36,8 @@ class SeedsAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     ordering = ('id_container',)
     fieldsets = (
         (None, {
-            'fields': (('id_container', 'seed_available', 'seed_in_stock',),
-                       ('plant', 'species_checked_by', 'came_as_species'),)
+            'fields': (('id_container', 'plant'),
+                       ('collection_year', 'source'),)
         }),
     )
 
