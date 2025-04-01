@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 22:58+0200\n"
+"POT-Creation-Date: 2025-03-31 22:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,39 +77,39 @@ msgstr ""
 
 #: app/sidebar/models.py:12 app/sidebar/templates/sidebar/sidebar.html:30
 msgid "title"
-msgstr "Titel"
+msgstr ""
 
 #: app/sidebar/models.py:13
 msgid "order"
-msgstr "sortierung"
+msgstr ""
 
 #: app/sidebar/models.py:30
 msgid "note"
-msgstr "Notiz"
+msgstr ""
 
 #: app/sidebar/models.py:32
 msgid "public"
-msgstr "öffentlich"
+msgstr ""
 
 #: app/sidebar/templates/sidebar/bookmark_item.html:5
 msgid "Delete bookmark?"
-msgstr "Bookmark löschen?"
+msgstr ""
 
 #: app/sidebar/templates/sidebar/note_item.html:6
 msgid "by"
-msgstr "von"
+msgstr ""
 
 #: app/sidebar/templates/sidebar/note_item.html:10
 msgid "Delete note?"
-msgstr "Notiz löschen?"
+msgstr ""
 
 #: app/sidebar/templates/sidebar/note_item.html:11
 msgid "Unpublish note?"
-msgstr "Veröffentlichung zurücknehmen?"
+msgstr ""
 
 #: app/sidebar/templates/sidebar/note_item.html:12
 msgid "Publish note?"
-msgstr "Notiz veröffentlichen?"
+msgstr ""
 
 #: app/sidebar/templates/sidebar/sidebar.html:15
 msgid "Shortcuts"
@@ -121,28 +121,24 @@ msgstr ""
 
 #: app/sidebar/templates/sidebar/sidebar.html:39
 msgid "add bookmark"
-msgstr "Bookmark hinzufügen"
+msgstr ""
 
 #: app/sidebar/templates/sidebar/sidebar.html:46
 msgid ""
 "There are no bookmarks yet. <br>Use the little <i class=\"fa fa-plus\"></i> "
 "to add your first Bookmark."
 msgstr ""
-"Noch gibt es keine Bookmarks. <br>Nutze das kleine <i class=\"fa fa-plus\"></"
-"i>,um Deinen ersten Bookmark zu erstellen."
 
 #: app/sidebar/templates/sidebar/sidebar.html:54
 msgid "Notes"
-msgstr "Notizen"
+msgstr ""
 
 #: app/sidebar/templates/sidebar/sidebar.html:56
 msgid "add note"
-msgstr "Notiz hinzufügen"
+msgstr ""
 
 #: app/sidebar/templates/sidebar/sidebar.html:62
 msgid ""
 "There are no notes for this page yet. <br>Use the little <i class=\"fa fa-"
 "plus\"></i> to add a note."
 msgstr ""
-"Noch gibt es keine Notizen für diese Seite. <br>Nutze das kleine <i "
-"class=\"fa fa-plus\"></i>, um eine Notiz hinzuzufügen."
