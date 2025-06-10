@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'rest_framework',
+    'drf_yasg',
 
     'config_tables.apps.ConfigTablesConfig',
     'plant.apps.PlantConfig',

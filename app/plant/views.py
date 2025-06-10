@@ -2,10 +2,22 @@ from django.template import loader
 from plant.models import Plant
 from django.db import connection
 from django.http import HttpResponse
+from rest_framework import viewsets
 
 from individuals.models import *
 from tools.permissions import *
+from .models import Plant, Category
+from .serializers import PlantSerializer, CategorySerializer
 
+
+class PlantModelViewSet(viewsets.ModelViewSet):
+    queryset = Plant.objects.all()
+    serializer_class = PlantSerializer
+
+
+class CategoryModelViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 @login_required
 def is_available(request, forId):

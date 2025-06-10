@@ -192,7 +192,7 @@ class Etikett_Individual(models.Model, Configurable):
 
     # override save, if the nomenclature of the selected individual is not checked the ticket goes to state N
     # def save(self, *args, **kwargs):
-    #     if not self.individual.species.nomenclature_checked:
+    #     if not self.individual.plant.nomenclature_checked:
     #         self.LaserGravur.current_state = 'N'
     #         self.LaserGravur.save()
     #     super(Etikett_Individual, self).save(*args, **kwargs)

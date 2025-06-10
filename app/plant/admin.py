@@ -28,7 +28,7 @@ class CategoryAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
             )
         }
         js = (
-            '/static/species/asteraceae.js',
+            '/static/plant/asteraceae.js',
         )
 
 
@@ -100,7 +100,7 @@ class PlantAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
 
     class Media:
         js = (
-            '/static/species/distribution_text.js',
+            '/static/plant/distribution_text.js',
         )
 
 

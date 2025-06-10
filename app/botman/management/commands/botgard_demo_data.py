@@ -8,9 +8,8 @@ from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from django.db import models
 
-from botman.models import BotanicGarden
 from plant.models import Category, Plant
-from individuals.models import Individual
+from seeds.models import Seeds
 
 
 class Command(BaseCommand):
@@ -24,25 +23,21 @@ class Command(BaseCommand):
 def add_demo_data():
     demo_path = Path(settings.BASE_DIR) / "demo-data"
 
-    garden_list = _read_csv(demo_path / "garden.csv")
-    family_list = _read_csv(demo_path / "family.csv")
-    species_list = _read_csv(demo_path / "plant.csv")
-    individual_list = _read_csv(demo_path / "individual.csv")
+    category_list = _read_csv(demo_path / "category.csv")
+    plant_list = _read_csv(demo_path / "plant.csv")
+    seeds_list = _read_csv(demo_path / "seeds.csv")
 
-    garden_id_map = _add_to_database(BotanicGarden, garden_list)
-    family_id_map = _add_to_database(Category, family_list)
+    category_id_map = _add_to_database(Category, category_list)
 
-    for data in species_list:
-        data["family"] = family_id_map[int(data["family"])]
+    for data in plant_list:
+        data["category"] = category_id_map[int(data["category"])]
 
-    species_id_map = _add_to_database(Plant, species_list)
+    plant_id_map = _add_to_database(Plant, plant_list)
 
-    for data in individual_list:
-        data["source"] = garden_id_map[int(data["source"])]
-        data["ipen_garden_code"] = garden_id_map[int(data["ipen_garden_code"])]
-        data["plant"] = species_id_map[int(data["plant"])]
+    for data in seeds_list:
+        data["plant"] = plant_id_map[int(data["plant"])]
 
-    _add_to_database(Individual, individual_list)
+    _add_to_database(Seeds, seeds_list)
 
 
 def _read_csv(filename: Path):
