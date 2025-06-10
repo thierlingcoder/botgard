@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ungettext_lazy
+from django.utils.translation import ngettext_lazy
 from django.utils.safestring import mark_safe
 from django.urls import reverse
 from django import forms
