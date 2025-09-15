@@ -1,5 +1,5 @@
 from django.template import loader
-from species.models import Species
+from plant.models import Plant
 from django.db import connection
 from django.http import HttpResponse
 
@@ -9,10 +9,10 @@ from tools.permissions import *
 
 @login_required
 def is_available(request, forId):
-    places = Outplanting.objects.filter(individual__species=forId).filter(plant_died=None)
-    seeds = Individual.objects.filter(species=forId).filter(seed_available=True)
+    places = Outplanting.objects.filter(individual__plant=forId).filter(plant_died=None)
+    seeds = Individual.objects.filter(plant=forId).filter(seed_available=True)
 
-    t = loader.get_template('species/available.html')
+    t = loader.get_template('plant/available.html')
     c = {
         'places': places,
         'seeds': seeds,
@@ -39,13 +39,13 @@ def distinct_query(table, fieldname, searchterm, limit):
 # 	if (not search_for.isalnum()):
 # 		return HttpResponse(status=403)
 # 	else:
-# 		#Species.objects.filter(genus=search_for)[0]
-# 		return HttpResponse(str(Species.objects.filter(genus=search_for)[0].family), mimetype="text/plain")
+# 		#Plant.objects.filter(genus=search_for)[0]
+# 		return HttpResponse(str(Plant.objects.filter(genus=search_for)[0].family), mimetype="text/plain")
 #
 
 @login_required
 def ajax_name(request, forId):
-    return HttpResponse(str(Species.objects.get(pk=forId)))
+    return HttpResponse(str(Plant.objects.get(pk=forId)))
 
 
 # def ajax_autofillauthor(request):
@@ -55,13 +55,13 @@ def ajax_name(request, forId):
 # 	if (not search_for.isalnum()):
 # 		return HttpResponse(status=403)
 # 	else:
-# 		#Species.objects.filter(genus=search_for)[0]
-# 		return HttpResponse(str(Species.objects.filter(genus=search_for)[0].genus_author), mimetype="text/plain")
+# 		#Plant.objects.filter(genus=search_for)[0]
+# 		return HttpResponse(str(Plant.objects.filter(genus=search_for)[0].genus_author), mimetype="text/plain")
 
 
 @login_required
 def ajax_autocomplete_individual_species(request, limit_by):
-    search_for = request.POST.get('species_auto')
+    search_for = request.POST.get('plant_auto')
     if (search_for == None):
         return HttpResponse(status=406)  # return 406 if no post parameter
 
@@ -70,10 +70,10 @@ def ajax_autocomplete_individual_species(request, limit_by):
 
     if len(search_for_splits) > 1:
         search_species = search_for_splits[1]
-        result_list = Species.objects.filter(family__genus__istartswith=search_genus).filter(
-            species__istartswith=search_species)  # [:limit_by];
+        result_list = Plant.objects.filter(family__genus__istartswith=search_genus).filter(
+            plant__istartswith=search_species)  # [:limit_by];
     else:
-        result_list = Species.objects.filter(family__genus__istartswith=search_genus)  # [:limit_by];
+        result_list = Plant.objects.filter(family__genus__istartswith=search_genus)  # [:limit_by];
 
     return_value = ''
     if len(result_list) > 0:  # check if there are any results
@@ -89,8 +89,7 @@ def ajax_autocomplete_species(request, search_item, limit_by):
     search_for = request.POST.get(search_item)
 
     whitelist = (
-        'species', 'species_author', 'subspecies', 'subspecies_author', 'variety', 'variety_author', 'form',
-        'form_author',
+        'plant', 'collective_species',
         'cultivar')  # contains allowed search fields to prevent code injection
     if (search_for == None):
         return HttpResponse(status=406)  # return 406 if no post parameter
@@ -103,7 +102,7 @@ def ajax_autocomplete_species(request, search_item, limit_by):
 
     # Do some tesings for security, check wether search_item is in the whitelist, the searchterm consists of alphanums
     if search_item in whitelist:
-        result_list = distinct_query("species_species", search_item, search_for, limit_by)
+        result_list = distinct_query("plant_plant", search_item, search_for, limit_by)
         return_value = ''
         if len(result_list) > 0:  # check if there are any results
             for elem in result_list:
@@ -131,7 +130,7 @@ def ajax_autocomplete_families(request, search_item, limit_by):
 
     if (
                 search_item in whitelist):  # Do some tesings for security, check wether search_item is in the whitelist, the searchterm consists of alphanums
-        result_list = distinct_query("species_family", search_item, search_for, limit_by)
+        result_list = distinct_query("plant_category", search_item, search_for, limit_by)
         return_value = ''
         if len(result_list) > 0:  # check if there are any results
             for elem in result_list:

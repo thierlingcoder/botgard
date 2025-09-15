@@ -85,7 +85,7 @@ class IndividualBase(models.Model):
     )
 
     came_as_species = models.CharField(
-        max_length=100, verbose_name=_("received as species"), blank=True
+        max_length=100, verbose_name=_("received as plant"), blank=True
     )
 
     ipen_country = models.CharField(max_length=3, choices=ISO_COUNTRY_CHOICES, verbose_name="IPEN", db_index=True)

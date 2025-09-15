@@ -8,6 +8,7 @@ from django.urls.exceptions import NoReverseMatch
 from config_app import get_value, register_key
 from sidebar import url_cleaner
 from django.db.models import Q
+from sidebar import *
 
 from django.conf import settings
 
@@ -70,6 +71,7 @@ def shortcut_list(context, *args, **kwargs):
     shortcuts_markup = ''
 
     for shortcut in shortcuts_config:
+        print(shortcut)
         target = False
         target_url = False
 
@@ -109,10 +111,10 @@ def shortcut_list(context, *args, **kwargs):
                 caption = captions[settings.LANGUAGE_CODE]
 
         if not target_url:
-            try:
-                target_url = reverse(target)
-            except NoReverseMatch:
-                target_url = 'improperly configured target'
+            # try:
+            target_url = reverse(target)
+            # except NoReverseMatch:
+            #     target_url = 'improperly configured target'
 
         shortcuts_markup += template.render({
             'icon': icon,

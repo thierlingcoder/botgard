@@ -59,16 +59,10 @@ class Outplanting(models.Model, Configurable):
     individual_link_decorator.admin_order_field = "individual__ipen_generated"
 
     @configurable
-    def family_single(self):
-        return self.individual.species.family.family
-    family_single.short_description = _('family')
-    family_single.admin_order_field = "individual__species__family__family"
-
-    @configurable
-    def genus_single(self):
-        return self.individual.species.family.genus
-    genus_single.short_description = _('genus')
-    genus_single.admin_order_field = "individual__species__family__genus"
+    def category_single(self):
+        return self.individual.plant.category.category
+    category_single.short_description = _('category')
+    category_single.admin_order_field = "individual__plant__category__category"
 
 
 def _recalc_outplanting_fields(outplanting, exclude_outplanting=None):

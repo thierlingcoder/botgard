@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy as __
 
-from species.models import Species
+from plant.models import Plant
 from .individual_base import *
 
 
@@ -15,8 +15,8 @@ class Individual(IndividualBase, Configurable):
     _id_field = "id_name_generated"
 
     ipen_garden_code = models.ForeignKey('botman.BotanicGarden', verbose_name="-", on_delete=models.CASCADE)
-    species = models.ForeignKey(
-        'species.Species', verbose_name=_("genus & Species"), blank=False,
+    plant = models.ForeignKey(
+        'plant.Plant', verbose_name=_("Plant"), blank=False,
         on_delete=models.CASCADE
     )
     source = models.ForeignKey(
@@ -135,34 +135,20 @@ class Individual(IndividualBase, Configurable):
     etikett_link_decorator.exclude_csv = True
 
     @configurable
-    def species_link_decorator(self):
-        url = reverse("admin:species_species_change", args=(self.species.pk,))
-        return mark_safe('<a href="%s">%s</a>' % (url, self.species))
-    species_link_decorator.short_description = __("species", "species", 1)
-    species_link_decorator.admin_order_field = "species"
+    def plant_link_decorator(self):
+        url = reverse("admin:plant_plant_change", args=(self.plant.pk,))
+        return mark_safe('<a href="%s">%s</a>' % (url, self.plant))
+    plant_link_decorator.short_description = __("plant", "plants", 1)
+    plant_link_decorator.admin_order_field = "plant"
     # redirection to field for filter-list
     # can also be a non-foreign field
-    species_link_decorator.searchable_field = "species__full_name_generated"
+    plant_link_decorator.searchable_field = "plant__full_name_generated"
 
     @configurable
-    def family_single(self):
-        return self.species.family.family
-    family_single.short_description = _('family')
-    family_single.admin_order_field = "species__family__family"
-
-    @configurable
-    def genus_single(self):
-        return self.species.family.genus
-    genus_single.short_description = _('genus')
-    genus_single.admin_order_field = "species__family__genus"
-
-    @configurable
-    def endangering_decorator(self):
-        return "%s" % self.species.protection_of_species
-
-    endangering_decorator.short_description = _("endangering")
-    endangering_decorator.admin_order_field = "species__protection_of_species"
-    endangering_decorator.searchable_field = "species__protection_of_species"
+    def category_single(self):
+        return self.plant.category.category
+    category_single.short_description = _('category')
+    category_single.admin_order_field = "plant__category__category"
 
     @configurable
     def departments_decorator(self):
@@ -179,22 +165,22 @@ class Individual(IndividualBase, Configurable):
     @configurable
     def nomenclature_checked_decorator(self):
         icon_url = static('admin/img/icon-%s.svg' %
-                          {True: 'yes', False: 'no', None: 'unknown'}[self.species.nomenclature_checked])
-        return mark_safe(format_html('<img src="{}" alt="{}" />', icon_url, self.species.nomenclature_checked))
+                          {True: 'yes', False: 'no', None: 'unknown'}[self.plant.nomenclature_checked])
+        return mark_safe(format_html('<img src="{}" alt="{}" />', icon_url, self.plant.nomenclature_checked))
     nomenclature_checked_decorator.short_description = _("nomenclature checked")
-    nomenclature_checked_decorator.admin_order_field = "species__nomenclature_checked"
+    nomenclature_checked_decorator.admin_order_field = "plant__nomenclature_checked"
 
     @configurable
     def etikett_text_decorator(self):
-        return self.species.area_of_distribution_etikettxt
+        return self.plant.area_of_distribution_etikettxt
     etikett_text_decorator.short_description = _("label text")
-    etikett_text_decorator.admin_order_field = "species__area_of_distribution_etikettxt"
+    etikett_text_decorator.admin_order_field = "plant__area_of_distribution_etikettxt"
 
     @configurable
     def etikett_detail_decorator(self):
-        return self.species.area_of_distribution_background
+        return self.plant.area_of_distribution_background
     etikett_detail_decorator.short_description = _("detailed")
-    etikett_detail_decorator.admin_order_field = "species__area_of_distribution_background"
+    etikett_detail_decorator.admin_order_field = "plant__area_of_distribution_background"
 
     @configurable
     def is_alive(self):
@@ -224,9 +210,9 @@ class Individual(IndividualBase, Configurable):
     image_decorator.short_description = _("image")
     image_decorator.exclude_csv = True
 
-    def species_lines(self):
+    def plant_lines(self):
         """Special function to output a multiline string for use with labels"""
-        spec_name = self.species.full_name(with_author=False)
+        spec_name = self.plant.full_name(with_author=False)
 
         line1 = ''
         line2 = ''
@@ -241,8 +227,8 @@ class Individual(IndividualBase, Configurable):
         spec_name = spec_name.split()
 
         if len(spec_name) == 2:
-            line1 = self.species.family.genus
-            line2 = self.species.species
+            line1 = self.plant.category.category
+            line2 = self.plant.plant
         else:
             for elem in spec_name:
                 if len(line1) < 15:
@@ -252,7 +238,7 @@ class Individual(IndividualBase, Configurable):
             line1 = line1[1:]
             line2 = line2[1:]
 
-        #if line2 == self.species.get_author_name():
+        #if line2 == self.plant.get_author_name():
         #    line2 = ""
         return line1, line2
 
@@ -266,7 +252,7 @@ class Individual(IndividualBase, Configurable):
 
         # -- update id_name_generated --
         self.id_name_generated = (
-            "%s (%s)" % (self.accession_number, self.species.full_name(with_author=False))
+            "%s (%s)" % (self.accession_number, self.plant.full_name(with_author=False))
         )[:100]
 
         # -- save Individual --
@@ -331,7 +317,7 @@ class IndividualForm(
             "accession_number": widgets.NumberInput()  # don't need a spinbox for the accession number
         },
         autocomplete_mapping={
-            "came_as_species": {"model": Species, "field": "full_name_generated"},
+            "came_as_species": {"model": Plant, "field": "full_name_generated"},
         }
     )
 ):
@@ -348,16 +334,16 @@ class Seed(Individual):
         proxy = True
 
     @configurable
-    def family_single(self):
-        return self.species.family.family
-    family_single.short_description = _('family')
-    family_single.admin_order_field = "species__family__family"
+    def category_single(self):
+        return self.plant.category.category
+    category_single.short_description = _('category')
+    category_single.admin_order_field = "plant__category__category"
 
     @configurable
     def genus_single(self):
-        return self.species.family.genus
-    genus_single.short_description = _('genus')
-    genus_single.admin_order_field = "species__family__genus"
+        return self.plant.category.category
+    genus_single.short_description = _('category')
+    genus_single.admin_order_field = "plant__category__category"
 
     @configurable
     def seed_etikett_decorator(self):
@@ -371,32 +357,32 @@ class Seed(Individual):
     @configurable
     def nomenclature_checked_decorator(self):
         icon_url = static('admin/img/icon-%s.svg' %
-                          {True: 'yes', False: 'no', None: 'unknown'}[self.species.nomenclature_checked])
-        return mark_safe(format_html('<img src="{}" alt="{}" />', icon_url, self.species.nomenclature_checked))
+                          {True: 'yes', False: 'no', None: 'unknown'}[self.plant.nomenclature_checked])
+        return mark_safe(format_html('<img src="{}" alt="{}" />', icon_url, self.plant.nomenclature_checked))
     nomenclature_checked_decorator.short_description = _("nomenclature checked")
-    nomenclature_checked_decorator.admin_order_field = "species__nomenclature_checked"
-    nomenclature_checked_decorator.searchable_field = "species__nomenclature_checked"
+    nomenclature_checked_decorator.admin_order_field = "plant__nomenclature_checked"
+    nomenclature_checked_decorator.searchable_field = "plant__nomenclature_checked"
 
     @configurable
     def etikett_detail_decorator(self):
-        return self.species.area_of_distribution_background
+        return self.plant.area_of_distribution_background
     etikett_detail_decorator.short_description = _("detailed")
-    etikett_detail_decorator.admin_order_field = "species__area_of_distribution_background"
-    etikett_detail_decorator.searchable_field = "species__area_of_distribution_background"
+    etikett_detail_decorator.admin_order_field = "plant__area_of_distribution_background"
+    etikett_detail_decorator.searchable_field = "plant__area_of_distribution_background"
 
     @configurable
     def etikett_text_decorator(self):
-        return self.species.area_of_distribution_etikettxt
+        return self.plant.area_of_distribution_etikettxt
     etikett_text_decorator.short_description = _("label text")
-    etikett_text_decorator.admin_order_field = "species__area_of_distribution_etikettxt"
-    etikett_text_decorator.searchable_field = "species__area_of_distribution_etikettxt"
+    etikett_text_decorator.admin_order_field = "plant__area_of_distribution_etikettxt"
+    etikett_text_decorator.searchable_field = "plant__area_of_distribution_etikettxt"
 
     @configurable
     def etikett_detail_decorator(self):
-        return self.species.area_of_distribution_background
+        return self.plant.area_of_distribution_background
     etikett_detail_decorator.short_description = _("detailed")
-    etikett_detail_decorator.admin_order_field = "species__area_of_distribution_background"
-    etikett_detail_decorator.searchable_field = "species__area_of_distribution_background"
+    etikett_detail_decorator.admin_order_field = "plant__area_of_distribution_background"
+    etikett_detail_decorator.searchable_field = "plant__area_of_distribution_background"
 
     def seed_add_to_latest_catalog_decorator(self):
         try:

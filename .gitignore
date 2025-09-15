@@ -11,6 +11,7 @@ scratchpad/
 env/
 venv/
 *.py[cod]
+.venv/
 
 # IntelliJ
 .idea/

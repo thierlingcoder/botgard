@@ -10,6 +10,8 @@ def register_key(key, default, description=None, validator=None):
     :param key: string - unique identifier
     :param default: text or object - either a text or gettext-getter or an object which is json-serializeable
     """
+    # if key=='sidebar_shortcuts':
+    #     print('register key: %s %s', key, default)
     is_json_candidate = isinstance(default, (list, tuple, dict))
     if is_json_candidate:
         json.dumps(default)
@@ -24,6 +26,8 @@ def get_value(key):
     from .models import KeyValue
     try:
         val = KeyValue.objects.get(key=key)
+        print('get_value: %s', key)
+        print('get_value: %s', val.value_json)
         if val.type == 't':
             return val.value
         if val.type == 'j':

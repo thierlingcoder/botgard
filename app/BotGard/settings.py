@@ -57,8 +57,9 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
 
     'config_tables.apps.ConfigTablesConfig',
-    'species.apps.SpeciesConfig',
+    'plant.apps.PlantConfig',
     'individuals.apps.IndividualsConfig',
+    'seeds.apps.SeedsConfig',
     'entrybook.apps.EntryBookConfig',
     'plantimages.apps.PlantimagesConfig',
     'seedcatalog.apps.SeedcatalogConfig',

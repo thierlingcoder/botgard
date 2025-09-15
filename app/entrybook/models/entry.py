@@ -3,7 +3,7 @@ from django.utils.translation import ngettext_lazy as __
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from species.models import Species
+from plant.models import Plant
 from botman.models import BotanicGarden
 from individuals.models.individual_base import *
 from individuals.models.territory import Department
@@ -44,8 +44,8 @@ class Entry(IndividualBase, Configurable):
 
     # --- the following Individual fields are replaced by simple CharFields ---
 
-    # originally FK on species.Species
-    species = models.CharField(
+    # originally FK on plant.Plant
+    plant = models.CharField(
         verbose_name=_("genus & Species"),
         max_length=128,
         blank=True,
@@ -170,8 +170,8 @@ class Entry(IndividualBase, Configurable):
 
         # -- update id_name_generated --
         self.id_name_generated = str(self.accession_number)
-        if self.species:
-            self.id_name_generated += f" ({self.species})"
+        if self.plant:
+            self.id_name_generated += f" ({self.plant})"
         self.id_name_generated = self.id_name_generated[:100]
 
         # -- save Individual --
@@ -185,8 +185,8 @@ class EntryForm(
             "accession_number": widgets.NumberInput(),  # don't need a spinbox for the accession number
         },
         autocomplete_mapping={
-            "species": {"model": Species, "field": "full_name_generated"},
-            "came_as_species": {"model": Species, "field": "full_name_generated"},
+            "plant": {"model": Plant, "field": "full_name_generated"},
+            "came_as_species": {"model": Plant, "field": "full_name_generated"},
             "source": {"model": BotanicGarden, "field": "full_name_generated"},
             "ipen_garden_code": {"model": BotanicGarden, "field": "full_name_generated"},
             # "department": {"model": Department, "field": "full_code"},

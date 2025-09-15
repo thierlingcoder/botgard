@@ -10,14 +10,15 @@ from botman.views import index_page
 urlpatterns = i18n_patterns(
     re_path(r'^admin/', admin.site.urls),
 
-    re_path(r'^individual/',    include('individuals.urls')),
-    re_path(r'^botman/',        include('botman.urls')),
-    re_path(r'^$',              index_page, name="index"),
-    re_path(r'^species/',       include('species.urls')),
-    re_path(r'^seedcatalog/',   include('seedcatalog.urls')),
-    re_path(r'^tickets/',       include('tickets.urls')),
-    re_path(r'^labels/',        include('labels.urls')),
-    re_path(r'^sidebar/',       include('sidebar.urls')),
+    re_path(r'^individual/', include('individuals.urls')),
+    re_path(r'^seeds/', include('seeds.urls')),
+    re_path(r'^botman/', include('botman.urls')),
+    re_path(r'^$', index_page, name="index"),
+    re_path(r'^plant/', include('plant.urls')),
+    re_path(r'^seedcatalog/', include('seedcatalog.urls')),
+    re_path(r'^tickets/', include('tickets.urls')),
+    re_path(r'^labels/', include('labels.urls')),
+    re_path(r'^sidebar/', include('sidebar.urls')),
     re_path(r'^ajax/',          include('ajax.urls')),
 )
 

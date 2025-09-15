@@ -65,31 +65,27 @@ class SeedAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
     actions_on_top = True
     list_display = (
         'change_link_decorator', 'order_number', 'accession_number', 'accession_extension', 'ipen_generated',
-        'species_link_decorator', 'seed_available', 'seed_in_stock', 'seed_add_to_latest_catalog_decorator',
-        'seed_etikett_decorator', 'endangering_decorator')
+        'plant_link_decorator', 'seed_available', 'seed_in_stock', 'seed_add_to_latest_catalog_decorator',
+        'seed_etikett_decorator')
     list_filter = (# 'seed_available', 'seed_in_stock', 'source__name',
-                   ('species__full_name_generated', ForeignKeyFilter),
-                   ('species__nomenclature_checked', ForeignKeyFilter),
-                   ('species__area_of_distribution_etikettxt', ForeignKeyFilter),
-                   ('species__area_of_distribution_background', ForeignKeyFilter),
-                   ('species__family__family', ForeignKeyFilter),
-                   ('species__family__genus', ForeignKeyFilter),
+                   ('plant__full_name_generated', ForeignKeyFilter),
+                   ('plant__category__category', ForeignKeyFilter),
                    )
 
     blacklist = ('id', '__str__', 'ipen_transfer_restricted', 'ipen_garden_code', 'ipen_accession_number',
-                 'ipen_country', 'departments_generated', 'territories_generated', 'species',
+                 'ipen_country', 'departments_generated', 'territories_generated', 'plant',
                  'alive_outplantings_generated')
 
     search_fields = search_fields_compatible([
-        'order_number', '@species__species', 'accession_number', '@species__family__genus',
-        '@species__family__family', 'ipen_generated', '@source__name', '@species__deutscher_name'
+        'order_number', '@plant__plant', 'accession_number',
+        '@plant__category__category', 'ipen_generated', '@source__name',
     ])
     ordering = ('accession_number',)
     list_editable = ('seed_available', 'seed_in_stock')
     fieldsets = (
         (None, {
             'fields': (('accession_number', 'accession_extension', 'seed_available', 'seed_in_stock',),
-                       ('species', 'species_checked_by', 'came_as_species'),)
+                       ('plant', 'species_checked_by', 'came_as_species'),)
         }),
         (_('IPEN'), {
             'fields': (('ipen_country', 'ipen_transfer_restricted', 'ipen_garden_code', 'ipen_accession_number'),)
@@ -108,8 +104,8 @@ class SeedAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable):
             'fields': ('order_number',)
         })
     )
-    #   	raw_id_fields = ("species", "came_as_species", )
-    raw_id_fields = ("species",)
+    #   	raw_id_fields = ("plant", "came_as_species", )
+    raw_id_fields = ("plant",)
     inlines = [OutplantingInline]
 
     class Media:
@@ -138,45 +134,35 @@ class IndividualAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable)
     list_display = (
         'change_link_decorator', 'accession_number', 'accession_extension', 'ipen_generated',
         #'sowing_number',
-        'species_link_decorator',
+        'plant_link_decorator',
         'departments_decorator', 'is_alive', 'source', 'etikett_link_decorator',
     )
     list_filter = (#'seed_available', 'seed_in_stock',
-                   #'species__nomenclature_checked',
                    # add all foreignkey fields that should be filterable
                    ('source__full_name_generated', ForeignKeyFilter),
-                   ('species__full_name_generated', ForeignKeyFilter),
-                   ('species__nomenclature_checked', ForeignKeyFilter),
-                   ('species__protection_of_species', ForeignKeyFilter),
-                   ('species__area_of_distribution_etikettxt', ForeignKeyFilter),
-                   ('species__area_of_distribution_background', ForeignKeyFilter),
-                   ('species__family__family', ForeignKeyFilter),
-                   ('species__family__genus', ForeignKeyFilter),
+                   ('plant__full_name_generated', ForeignKeyFilter),
+                   ('plant__category__category', ForeignKeyFilter),
                    # ('geo_location__geo_name', ForeignKeyFilter),
                    # ('osm_location__full_name', ForeignKeyFilter),
                    )
 
     blacklist = ('id', '__str__', 'ipen_transfer_restricted', 'ipen_garden_code', 'ipen_accession_number',
-                 'ipen_country', 'departments_generated', 'territories_generated', 'species',
+                 'ipen_country', 'departments_generated', 'territories_generated', 'plant',
                  'outplantings_generated', 'alive_outplantings_generated', 'is_alive_generated')
 
     list_display_links = ()
     search_fields = search_fields_compatible(('accession_number', 'ipen_generated',
-                     '@species__species',
-                     '@species__subspecies',
-                     '@species__variety',
-                     '@species__form',
-                     '@species__family__genus',
-                     '@species__family__family',
-                     '@species__full_name_generated',
-                     '@species__deutscher_name',
+                     '@plant__plant',
+                     '@plant__collective_species',
+                     '@plant__category__category',
+                     '@plant__full_name_generated',
                      '@source__name',
                      ))
     ordering = ('accession_number',)
     fieldsets = (
         (None, {
             'fields': (('accession_number', 'accession_extension', 'seed_available', 'seed_in_stock',),
-                       ('species', 'species_checked_by', 'came_as_species'),)
+                       ('plant', 'species_checked_by', 'came_as_species'),)
         }),
         ('IPEN', {
             'fields': (('ipen_country', 'ipen_transfer_restricted', 'ipen_garden_code', 'ipen_accession_number'),)
@@ -195,7 +181,7 @@ class IndividualAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable)
             'fields': ('order_number', 'sowing_number')
         })
     )
-    raw_id_fields = ("species",)
+    raw_id_fields = ("plant",)
     inlines = [OutplantingInline, PlantImageInline]
 
     class Media:
@@ -208,7 +194,6 @@ class IndividualAdmin(readOnlyAdmin.ReadPermissionModelAdmin, ConfigurableTable)
 
 
 admin.site.register(Individual, IndividualAdmin)
-admin.site.register(Seed, SeedAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Territory, TerritoryAdmin)
 
@@ -309,7 +294,7 @@ if 0:
         form = AutoCompleteForm(Outplanting)
         list_display = ('territory_decorator', 'department_decorator',
                         'seeded_date', 'date', 'plant_died',
-                        'individual_link_decorator', 'family_single', 'genus_single')
+                        'individual_link_decorator', 'category_single', 'genus_single')
         list_filter = (
             ('department__code', ForeignKeyFilter),
             ('department__territory__code', ForeignKeyFilter),
